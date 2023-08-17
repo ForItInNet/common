@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        jcenter()
+//        jcenter()
 
     }
     dependencies {
@@ -13,6 +13,7 @@ plugins {
     id 'java'
     id 'com.jfrog.artifactory' version '4.31.8'
     id 'maven-publish'
+    id 'org.springframework.boot' version '3.1.1'
 }
 
 group 'com.foryouinnet'
@@ -23,8 +24,22 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springCloudVersion', "2022.0.4")
+    set('springCloudDependencyVersion', "4.0.4")
+    set('springBootDependencyVersion', "3.1.1")
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.4'
+    implementation "org.springframework.boot:spring-boot-starter:$springBootDependencyVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootDependencyVersion"
+
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudDependencyVersion"
+
+    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor:$springBootDependencyVersion"
+
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
@@ -37,42 +52,42 @@ test {
     useJUnitPlatform()
 }
 
-artifactory {
-    contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
-    publish {
-        repository {
-            repoKey = "${artifactory_repository}"
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'LWM'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    repositories {
-        maven {
-            url "${artifactory_contextUrl}/${artifactory_repository}/"
-            credentials {
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-            }
-        }
-    }
-}
+//artifactory {
+//    contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+//    publish {
+//        repository {
+//            repoKey = "${artifactory_repository}"
+//            username = "${artifactory_user}"
+//            password = "${artifactory_password}"
+//            maven = true
+//
+//        }
+//    }
+//    resolve {
+//        repository {
+//            repoKey = 'LWM'
+//            username = "${artifactory_user}"
+//            password = "${artifactory_password}"
+//            maven = true
+//
+//        }
+//    }
+//}
+//
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from components.java
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            url "${artifactory_contextUrl}/${artifactory_repository}/"
+//            credentials {
+//                username = "${artifactory_user}"
+//                password = "${artifactory_password}"
+//            }
+//        }
+//    }
+//}
