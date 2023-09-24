@@ -53,7 +53,8 @@ public enum BusinessLogicExceptionEnum {
     }
 
     public enum MessageService implements ExceptionRepresentation {
-        CONFIRMATION_CODE_SENDING_PAUSE("Code resending pause");
+        CONFIRMATION_CODE_SENDING_PAUSE("Code resending pause"),
+        MESSAGE_SENDING_DATE_NOT_FOUND("Message sending data not found");
 
         private final String message;
 

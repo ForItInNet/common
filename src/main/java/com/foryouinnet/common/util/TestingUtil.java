@@ -5,7 +5,7 @@ import org.springframework.aop.framework.AopProxyUtils;
 
 import java.lang.reflect.Method;
 
-public class TestingUtil {
+public final class TestingUtil {
 
     final static String METHOD_WAS_NOT_FOUND_ERROR_MESSAGE = "Method was not found";
     final static String METHOD_WAS_FOUND_WITH_DIFFERENT_SIGNATURE_ERROR_MESSAGE = "Method was fount but with different signature";

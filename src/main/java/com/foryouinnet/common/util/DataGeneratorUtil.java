@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class DataGeneratorUtil {
+public final class DataGeneratorUtil {
 
     final static String INVALID_RANDOM_NUMBER_SIZE_MESSAGE = "Size of random number cannot be null or less/equals zero";
 

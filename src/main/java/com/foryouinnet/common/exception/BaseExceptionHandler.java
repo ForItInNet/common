@@ -14,41 +14,37 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler({BusinessLogicException.class})
     public ProblemDetail handleBusinessLogicException(BusinessLogicException exception) {
-
+        String[] enumPath = exception.getExceptionEnum().getClass().getCanonicalName().split("\\.");
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+
+        problemDetail.setProperty(ExceptionMedatataEnum.GROUP_ID.toString(), enumPath[enumPath.length - 1]);
         problemDetail.setProperty(ExceptionMedatataEnum.EXCEPTION_ID.toString(), exception.getExceptionEnum().name());
-        problemDetail.setProperty(ExceptionMedatataEnum.DEFAULT_MESSAGE.toString(), exception.getExceptionEnum().toString());
+        problemDetail.setProperty(ExceptionMedatataEnum.DEFAULT_MESSAGE.toString(), exception.getMessage());
 
         log.error(exception, exception);
-
         return problemDetail;
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
     public ProblemDetail handleBusinessLogicException(ConstraintViolationException exception) {
-
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-
         log.error(exception, exception);
-
         return problemDetail;
     }
 
     @ExceptionHandler({RuntimeException.class})
     public ProblemDetail handleRuntimeException(Throwable exception) {
-
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setProperty("error", "unknown error");
-
         log.error(exception, exception);
-
         return problemDetail;
     }
 
     private enum ExceptionMedatataEnum {
-        EXCEPTION_ID("exception_id"),
-        MESSAGE_ID("message_id"),
-        DEFAULT_MESSAGE("default_message");
+        GROUP_ID("groupId"),
+        EXCEPTION_ID("exceptionId"),
+        MESSAGE_ID("messageId"),
+        DEFAULT_MESSAGE("defaultMessage");
 
         private String name;
 
